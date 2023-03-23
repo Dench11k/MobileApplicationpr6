@@ -20,6 +20,7 @@ public class SecondActivity extends AppCompatActivity {
     private static final String TAG = "MyApp";
     TextView textView;
     ActivityResultLauncher<Intent> activityLauncher;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
