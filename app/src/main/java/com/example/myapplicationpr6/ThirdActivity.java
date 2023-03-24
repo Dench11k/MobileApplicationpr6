@@ -45,12 +45,15 @@ public class ThirdActivity extends AppCompatActivity {
 
 
     }
-    public static void createChannelIfNeeded(NotificationManager manager) {
+
+    public void createChannelIfNeeded() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_ID, NotificationManager.IMPORTANCE_DEFAULT);
-            manager.createNotificationChannel(notificationChannel);
+            NotificationManager notificationManager = ThirdActivity.this.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(notificationChannel);
         }
     }
+
     private void showNotification() {
         NotificationCompat.Builder builder = new
                 NotificationCompat.Builder(ThirdActivity.this, CHANNEL_ID)
@@ -59,9 +62,12 @@ public class ThirdActivity extends AppCompatActivity {
                         R.string.text_name_5))
                 .setContentText("Автомобиль успешно забронирован!")
                 .setPriority(NotificationCompat.PRIORITY_LOW);
-        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        createChannelIfNeeded(notificationManager);
-        notificationManager.notify(NOTIFY_ID, builder.build());
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ThirdActivity.this);
+        createChannelIfNeeded();
+        if (ActivityCompat.checkSelfPermission(ThirdActivity.this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            notificationManager.notify(NOTIFY_ID, builder.build());
+        }
+
         }
 
     private static final String TAG = "MyApp";
@@ -69,11 +75,12 @@ public class ThirdActivity extends AppCompatActivity {
     public void onMyButton1(View view) {
 
             Intent intent = new Intent();
+            showNotification();
             EditText nameText = findViewById(R.id.editTextCar);
             String name = nameText.getText().toString();
             intent.putExtra("namecar", name);
             setResult(RESULT_OK, intent);
-            showNotification();
+
             finish();
 
 

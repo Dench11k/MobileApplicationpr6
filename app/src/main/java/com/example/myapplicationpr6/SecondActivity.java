@@ -45,6 +45,8 @@ public class SecondActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Log.i(TAG, "ButtonOn_1");
                         Toast.makeText(SecondActivity.this, "Переход осуществлен", Toast.LENGTH_SHORT).show();
+                        //Intent intent1 = new Intent(SecondActivity.this, MyService.class);
+                        //startService(intent1);
                         TextView nameText = findViewById(R.id.textView9);
                         TextView nameText1 = findViewById(R.id.textView10);
                         String name = nameText.getText().toString();
@@ -53,6 +55,7 @@ public class SecondActivity extends AppCompatActivity {
                         intent.putExtra("name", name);
                         intent.putExtra("name1", name1);
                         activityLauncher.launch(intent);
+
                     }
                 }
         );
